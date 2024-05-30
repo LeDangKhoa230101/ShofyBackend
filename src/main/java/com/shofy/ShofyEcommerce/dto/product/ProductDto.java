@@ -1,6 +1,7 @@
 package com.shofy.ShofyEcommerce.dto.product;
 
 public class ProductDto {
+	private Long id;
 	private String name;
 	private double priceOld;
 	private double priceNew;
@@ -11,13 +12,22 @@ public class ProductDto {
 		super();
 	}
 
-	public ProductDto(String name, double priceOld, double priceNew, String imageDefault, String cateName) {
+	public ProductDto(Long id, String name, double priceOld, double priceNew, String imageDefault, String cateName) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.priceOld = priceOld;
 		this.priceNew = priceNew;
 		this.imageDefault = imageDefault;
 		this.cateName = cateName;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {

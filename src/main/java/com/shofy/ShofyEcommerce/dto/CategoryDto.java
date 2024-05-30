@@ -1,6 +1,7 @@
 package com.shofy.ShofyEcommerce.dto;
 
 public class CategoryDto {
+	private Long cateId;
 	private String cateName;
 	private String cateImage;
 	private Long productCount;
@@ -9,10 +10,19 @@ public class CategoryDto {
 		super();
 	}
 
-	public CategoryDto(String cateName, String cateImage, Long productCount) {
+	public CategoryDto(Long cateId, String cateName, String cateImage, Long productCount) {
+		this.cateId = cateId;
 		this.cateName = cateName;
 		this.cateImage = cateImage;
 		this.productCount = productCount;
+	}
+
+	public Long getCateId() {
+		return cateId;
+	}
+
+	public void setCateId(Long cateId) {
+		this.cateId = cateId;
 	}
 
 	public String getCateName() {

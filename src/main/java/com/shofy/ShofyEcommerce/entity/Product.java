@@ -67,6 +67,9 @@ public class Product {
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Image> images;
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ProductColor> productColors;
 
 	public Product() {
 		super();
@@ -201,6 +204,14 @@ public class Product {
 
 	public void setImages(List<Image> images) {
 		this.images = images;
+	}
+
+	public List<ProductColor> getProductColors() {
+		return productColors;
+	}
+
+	public void setProductColors(List<ProductColor> productColors) {
+		this.productColors = productColors;
 	}
 	
 }
