@@ -70,6 +70,16 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 			+ "ORDER BY p.priceNew ASC", nativeQuery = true)
 	List<Object[]> getProductByAsc();
 	
+	@Query(value = "SELECT p.id, p.name, p.priceOld, p.priceNew, p.imageDefault, c.name AS cateName "
+			+ "FROM products p, categorys c "
+			+ "WHERE p.cateId = c.id "
+			+ "LIMIT :size OFFSET :offset", nativeQuery = true)
+	List<Object[]> pagination(@Param("offset") Integer offset, @Param("size") Integer size);
+	
+	
+	@Query(value = "SELECT COUNT(*) FROM products", nativeQuery = true)
+    long countAllProducts();
+	
 }
 
 

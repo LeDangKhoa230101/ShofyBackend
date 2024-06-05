@@ -7,8 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shofy.ShofyEcommerce.dto.PageDto;
 import com.shofy.ShofyEcommerce.dto.product.ProductDetailDto;
 import com.shofy.ShofyEcommerce.dto.product.ProductDto;
 import com.shofy.ShofyEcommerce.service.ProductService;
@@ -54,6 +56,12 @@ public class ProductController {
 	@GetMapping("/list-product/asc")
 	public List<ProductDto> getProductAsc() {
 		return productService.getListProductAsc();
+	}
+	
+	@GetMapping("/pagination/{page}")
+	public PageDto paginate(@PathVariable int page,
+            @RequestParam(defaultValue = "6") int size) {
+		return productService.getProductPage(page, size);
 	}
 
 }

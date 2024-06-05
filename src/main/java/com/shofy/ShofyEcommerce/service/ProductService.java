@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shofy.ShofyEcommerce.dto.ColorDto;
 import com.shofy.ShofyEcommerce.dto.ImageDto;
+import com.shofy.ShofyEcommerce.dto.PageDto;
 import com.shofy.ShofyEcommerce.dto.product.ProductDetailDto;
 import com.shofy.ShofyEcommerce.dto.product.ProductDto;
 import com.shofy.ShofyEcommerce.repository.ProductRepository;
@@ -157,4 +158,43 @@ public class ProductService {
 		}
 		return productDtos;
 	}
+
+	// pagination
+	public PageDto getProductPage(Integer page, Integer size) {
+		int offset = (size * page) - size;
+		
+		List<Object[]> results = productRepository.pagination(offset, size);
+		long totalProducts = productRepository.countAllProducts();
+		
+		List<ProductDto> productDtos = new ArrayList<ProductDto>();
+		
+		for(Object[] result : results) {
+			Long id = ((Number) result[0]).longValue();
+			String name = (String) result[1];
+			double priceOld = (double) result[2];
+			double priceNew = (double) result[3];
+			String imageDefault = (String) result[4];
+			String cateName = (String) result[5];
+			productDtos.add(new ProductDto(id, name, priceOld, priceNew, imageDefault, cateName));
+		}
+		
+		return new PageDto(productDtos, totalProducts); 
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
