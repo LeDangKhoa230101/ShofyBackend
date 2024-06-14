@@ -2,16 +2,7 @@ package com.shofy.ShofyEcommerce.entity;
 
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "carts")
@@ -22,21 +13,20 @@ public class Cart {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "productId")
+	@JoinColumn(name = "product_id")
 	private Product product;
 
 	@ManyToOne
-	@JoinColumn(name = "userId")
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	@Column(name = "quantity")
 	private int quantity;
-
+	
 	@Column(name = "price")
 	private double price;
 
-	@Column(name = "createAt")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_at")
 	private Date createAt;
 
 	public Cart() {

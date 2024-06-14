@@ -48,7 +48,7 @@ public class UserService {
 		}
 		 
 		// save user
-		User userSignUp = new User(signUpDto.getName(), signUpDto.getEmail(), encryptPassword, "ROLE_USER");
+		User userSignUp = new User(signUpDto.getName(), signUpDto.getEmail(), encryptPassword, "ROLE_ADMIN");
 		userRepository.save(userSignUp);
 		
 		// create token

@@ -14,6 +14,7 @@ import com.shofy.ShofyEcommerce.dto.ImageDto;
 import com.shofy.ShofyEcommerce.dto.PageDto;
 import com.shofy.ShofyEcommerce.dto.product.ProductDetailDto;
 import com.shofy.ShofyEcommerce.dto.product.ProductDto;
+import com.shofy.ShofyEcommerce.entity.Product;
 import com.shofy.ShofyEcommerce.repository.ProductRepository;
 
 @Service
@@ -21,6 +22,11 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	public Product findById(Long id) {
+		Optional<Product> optionalProduct = productRepository.findById(id);
+		return optionalProduct.get();
+	}
 
 	public List<ProductDto> getListProductNew() {
 		List<Object[]> results = productRepository.getProductNew();
@@ -97,16 +103,17 @@ public class ProductService {
 		Object[] res = result.get(0);
 
 		ProductDetailDto detailDto = new ProductDetailDto();
-		detailDto.setName((String) res[0]);
-		detailDto.setPriceOld((Double) res[1]);
-		detailDto.setPriceNew((Double) res[2]);
-		detailDto.setDescription((String) res[3]);
-		detailDto.setImageDefault((String) res[4]);
-		detailDto.setCateName((String) res[5]);
-		detailDto.setBrandName((String) res[6]);
+		detailDto.setId(((Number) res[0]).longValue());
+		detailDto.setName((String) res[1]);
+		detailDto.setPriceOld((Double) res[2]);
+		detailDto.setPriceNew((Double) res[3]);
+		detailDto.setDescription((String) res[4]);
+		detailDto.setImageDefault((String) res[5]);
+		detailDto.setCateName((String) res[6]);
+		detailDto.setBrandName((String) res[7]);
 
-		String colorsJson = (String) res[7];
-		String imagesJson = (String) res[8];
+		String colorsJson = (String) res[8];
+		String imagesJson = (String) res[9];
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
@@ -162,13 +169,13 @@ public class ProductService {
 	// pagination
 	public PageDto getProductPage(Integer page, Integer size) {
 		int offset = (size * page) - size;
-		
+
 		List<Object[]> results = productRepository.pagination(offset, size);
 		long totalProducts = productRepository.countAllProducts();
-		
+
 		List<ProductDto> productDtos = new ArrayList<ProductDto>();
-		
-		for(Object[] result : results) {
+
+		for (Object[] result : results) {
 			Long id = ((Number) result[0]).longValue();
 			String name = (String) result[1];
 			double priceOld = (double) result[2];
@@ -177,24 +184,7 @@ public class ProductService {
 			String cateName = (String) result[5];
 			productDtos.add(new ProductDto(id, name, priceOld, priceNew, imageDefault, cateName));
 		}
-		
-		return new PageDto(productDtos, totalProducts); 
+
+		return new PageDto(productDtos, totalProducts);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

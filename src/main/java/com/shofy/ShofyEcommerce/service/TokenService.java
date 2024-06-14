@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.shofy.ShofyEcommerce.entity.Token;
 import com.shofy.ShofyEcommerce.entity.User;
+import com.shofy.ShofyEcommerce.exceptions.AuthenticationFailException;
 import com.shofy.ShofyEcommerce.repository.TokenRepository;
 
 @Service
@@ -32,15 +33,15 @@ public class TokenService {
 		return authenticationToken.getUser();
 	}
 
-//	public void authenticate(String token) throws AuthenticationFailException {
-//		// null check
-//		if (Objects.isNull(token)) {
-//			// throw an exception
-//			throw new AuthenticationFailException("token not present");
-//		}
-//		if (Objects.isNull(getUser(token))) {
-//			throw new AuthenticationFailException("token not valid");
-//		}
-//	}
+	public void authenticate(String token) throws AuthenticationFailException {
+		// null check
+		if (Objects.isNull(token)) {
+			// throw an exception
+			throw new AuthenticationFailException("token not present");
+		}
+		if (Objects.isNull(getUser(token))) {
+			throw new AuthenticationFailException("token not valid");
+		}
+	}
 
 }

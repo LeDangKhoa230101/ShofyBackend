@@ -1,11 +1,8 @@
 package com.shofy.ShofyEcommerce.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.util.List;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +23,9 @@ public class User {
 
 	@Column(name = "role")
 	private String role;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Cart> carts;
 
 	public User() {
 		super();
@@ -78,4 +78,13 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public List<Cart> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(List<Cart> carts) {
+		this.carts = carts;
+	}
+
 }

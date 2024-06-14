@@ -6,6 +6,7 @@ import com.shofy.ShofyEcommerce.dto.ColorDto;
 import com.shofy.ShofyEcommerce.dto.ImageDto;
 
 public class ProductDetailDto {
+	private Long id;
 	private String name;
 	private double priceOld;
 	private double priceNew;
@@ -20,9 +21,10 @@ public class ProductDetailDto {
 		super();
 	}
 
-	public ProductDetailDto(String name, double priceOld, double priceNew, String description, String imageDefault,
-			String cateName, String brandName, List<ColorDto> colors, List<ImageDto> images) {
+	public ProductDetailDto(Long id, String name, double priceOld, double priceNew, String description,
+			String imageDefault, String cateName, String brandName, List<ColorDto> colors, List<ImageDto> images) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.priceOld = priceOld;
 		this.priceNew = priceNew;
@@ -32,6 +34,14 @@ public class ProductDetailDto {
 		this.brandName = brandName;
 		this.colors = colors;
 		this.images = images;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {

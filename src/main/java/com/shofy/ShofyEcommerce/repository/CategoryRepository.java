@@ -14,13 +14,13 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 	
 	@Query(value = "SELECT c.id AS cateId, c.name AS cateName, c.image AS cateImage, COUNT(p.id) AS productCount " 
 			+ "FROM categorys c "
-			+ "LEFT JOIN products p ON c.id = p.cateId " 
+			+ "LEFT JOIN products p ON c.id = p.cate_id " 
 			+ "GROUP BY c.id, c.name, c.image", nativeQuery = true)
 	List<Object[]> findCategoryProductCounts();
 
-	@Query(value = "SELECT p.id, p.name, p.priceOld, p.priceNew, p.imageDefault, c.name AS cateName "
+	@Query(value = "SELECT p.id, p.name, p.price_old, p.price_new, p.image_default, c.name AS cateName "
 			+ "FROM products p, categorys c "
-			+ "WHERE p.cateId = c.id AND c.name = ?", nativeQuery = true)
+			+ "WHERE p.cate_id = c.id AND c.name = ?", nativeQuery = true)
 	List<Object[]> getProductByCategory(@Param("name") String name);
 	
 }

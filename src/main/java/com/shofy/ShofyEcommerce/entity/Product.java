@@ -3,19 +3,9 @@ package com.shofy.ShofyEcommerce.entity;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "products")
@@ -25,43 +15,44 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "name", nullable = false)
+	@Column(name = "name")
 	private String name;
-
-	@Column(name = "priceOld", nullable = false)
+	
+	@Column(name = "price_old")
 	private double priceOld;
-
-	@Column(name = "priceNew", nullable = false)
+	
+	@Column(name = "price_new")
 	private double priceNew;
-
-	@Column(name = "description", nullable = false)
+	
+	@Column(name = "description")
 	private String description;
-
-	@Column(name = "imageDefault", nullable = false)
+	
+	@Column(name = "image_default")
 	private String imageDefault;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cateId")
+	@ManyToOne
+	@JoinColumn(name = "cate_id")
+	@JsonBackReference
 	private Category category;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "brandId")
+	@ManyToOne
+	@JoinColumn(name = "brand_id")
 	private Brand brand;
 
-	@Column(name = "productNew", nullable = false)
+	@Column(name = "product_new")
 	private boolean productNew;
-
-	@Column(name = "productFeatured", nullable = false)
+	
+	@Column(name = "product_featured")
 	private boolean productFeatured;
-
-	@Column(name = "productSeller", nullable = false)
+	
+	@Column(name = "product_seller")
 	private boolean productSeller;
 
-	@Column(name = "createAt")
+	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
 
-	@Column(name = "updateAt")
+	@Column(name = "update_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
 	
@@ -70,7 +61,7 @@ public class Product {
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProductColor> productColors;
-
+	
 	public Product() {
 		super();
 	}
