@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.shofy.ShofyEcommerce.dto.ApiResponseDto;
+import com.shofy.ShofyEcommerce.dto.OrderDto;
 import com.shofy.ShofyEcommerce.dto.cart.CartDto;
 import com.shofy.ShofyEcommerce.dto.cart.CartItemDto;
 import com.shofy.ShofyEcommerce.entity.Cart;
@@ -72,7 +73,7 @@ public class CartService {
 			totalPrice += cartItemDto.getQuanty() * cartItemDto.getProductPriceNew();
 			cartItems.add(cartItemDto); 
 		}
-		
+		 
 		CartDto cartDto = new CartDto();
 		cartDto.setCartItems(cartItems);
 		cartDto.setTotalPrice(totalPrice);
@@ -142,6 +143,26 @@ public class CartService {
 		
 		return cartList.size();
 		
+	}
+
+	public OrderDto createOrder(User user) {
+		List<Cart> cartList = cartRepository.findAllByUser(user);
+		
+		List<CartItemDto> cartItems = new ArrayList<CartItemDto>();
+		
+		double totalPrice = 0;
+		
+		for(Cart cart : cartList) {
+			CartItemDto cartItemDto = new CartItemDto(cart);
+			totalPrice += cartItemDto.getQuanty() * cart.getProduct().getPriceNew();
+			cartItems.add(cartItemDto);
+		}
+		 
+		OrderDto orderDto = new OrderDto();
+		orderDto.setCartItems(cartItems);;
+		orderDto.setTotalPrice(totalPrice);
+		
+		return orderDto;
 	}
 	
 }

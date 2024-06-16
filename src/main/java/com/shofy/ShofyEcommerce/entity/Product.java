@@ -3,8 +3,6 @@ package com.shofy.ShofyEcommerce.entity;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -17,22 +15,21 @@ public class Product {
 
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "price_old")
 	private double priceOld;
-	
+
 	@Column(name = "price_new")
 	private double priceNew;
-	
+
 	@Column(name = "description")
 	private String description;
-	
+
 	@Column(name = "image_default")
 	private String imageDefault;
 
 	@ManyToOne
 	@JoinColumn(name = "cate_id")
-	@JsonBackReference
 	private Category category;
 
 	@ManyToOne
@@ -41,34 +38,32 @@ public class Product {
 
 	@Column(name = "product_new")
 	private boolean productNew;
-	
+
 	@Column(name = "product_featured")
 	private boolean productFeatured;
-	
+
 	@Column(name = "product_seller")
 	private boolean productSeller;
 
 	@Column(name = "create_at")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
 
 	@Column(name = "update_at")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateAt;
-	
+
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Image> images;
-	
+
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProductColor> productColors;
-	
+
 	public Product() {
 		super();
 	}
 
 	public Product(Long id, String name, double priceOld, double priceNew, String description, String imageDefault,
 			Category category, Brand brand, boolean productNew, boolean productFeatured, boolean productSeller,
-			Date createAt, Date updateAt) {
+			Date createAt, Date updateAt, List<Image> images, List<ProductColor> productColors) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -83,6 +78,8 @@ public class Product {
 		this.productSeller = productSeller;
 		this.createAt = createAt;
 		this.updateAt = updateAt;
+		this.images = images;
+		this.productColors = productColors;
 	}
 
 	public Long getId() {
@@ -204,5 +201,5 @@ public class Product {
 	public void setProductColors(List<ProductColor> productColors) {
 		this.productColors = productColors;
 	}
-	
+
 }

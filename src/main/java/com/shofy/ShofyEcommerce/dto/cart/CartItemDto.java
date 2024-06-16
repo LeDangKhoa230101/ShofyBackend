@@ -10,7 +10,7 @@ public class CartItemDto {
 	private String productName;
 	private String productImageDefault;
 	private double productPriceNew;
-
+	
 	public CartItemDto() {
 		super();
 	}
@@ -24,7 +24,7 @@ public class CartItemDto {
 		this.productImageDefault = cart.getProduct().getImageDefault();
 		this.productPriceNew = cart.getProduct().getPriceNew();
 	}
-
+	
 	public Long getId() {
 		return id;
 	}

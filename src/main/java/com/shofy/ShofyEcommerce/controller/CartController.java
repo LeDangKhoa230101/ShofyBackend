@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shofy.ShofyEcommerce.dto.ApiResponseDto;
+import com.shofy.ShofyEcommerce.dto.OrderDto;
 import com.shofy.ShofyEcommerce.dto.cart.CartDto;
 import com.shofy.ShofyEcommerce.entity.User;
 import com.shofy.ShofyEcommerce.service.CartService;
+import com.shofy.ShofyEcommerce.service.OrderService;
 import com.shofy.ShofyEcommerce.service.TokenService;
 
 @RestController
@@ -25,6 +27,9 @@ public class CartController {
 	
 	@Autowired
 	private TokenService tokenService;
+	
+	@Autowired
+	private OrderService orderService;
 	
 	@PostMapping("/add-to-cart/{productId}")
 	public ResponseEntity<ApiResponseDto> addToCart(
@@ -90,6 +95,19 @@ public class CartController {
 		tokenService.authenticate(token);
 		User user = tokenService.getUser(token);
 		return cartService.countCart(user);
+	}
+	
+	@PostMapping("/checkout")
+	public OrderDto checkout(@RequestParam("phone") String phone,
+            @RequestParam("address") String address,
+            @RequestParam("note") String note,
+			@RequestParam("token") String token) {
+		
+		tokenService.authenticate(token);
+		User user = tokenService.getUser(token);
+		
+		return orderService.checkout(phone, address, note, user);
+		
 	}
 	
 }

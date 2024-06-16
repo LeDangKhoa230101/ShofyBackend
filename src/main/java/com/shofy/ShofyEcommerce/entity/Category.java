@@ -2,8 +2,6 @@ package com.shofy.ShofyEcommerce.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -21,7 +19,6 @@ public class Category {
 	private String name;
 
 	@OneToMany(mappedBy = "category")
-	@JsonManagedReference
 	private List<Product> products;
 
 	public Category() {
